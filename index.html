@@ -21,32 +21,50 @@
         <!-- CSS and JS -->
         <link rel="stylesheet" href="style.css" />
         <script src="index.js" defer></script>
-        <title>Calculadora | Raiane Oliveira</title>
+        <title>Calculadora</title>
     </head>
     <body>
         <section class="calculator-container">
             <div class="display-calculator"></div>
             <div class="functionalities-calculator">
-                <button class="circle-buttons ce-button">CE</button>
-                <button class="circle-buttons">C</button>
-                <button class="circle-buttons">%</button>
-                <button class="circle-buttons operators">/</button>
-                <button class="circle-buttons">7</button>
-                <button class="circle-buttons">8</button>
-                <button class="circle-buttons">9</button>
-                <button class="circle-buttons operators">X</button>
-                <button class="circle-buttons">4</button>
-                <button class="circle-buttons">5</button>
-                <button class="circle-buttons">6</button>
-                <button class="circle-buttons operators">-</button>
-                <button class="circle-buttons">1</button>
-                <button class="circle-buttons">2</button>
-                <button class="circle-buttons">3</button>
-                <button class="circle-buttons operators">+</button>
-                <button class="circle-buttons">+/-</button>
-                <button class="circle-buttons">0</button>
+                <button
+                    data-clear="ce"
+                    class="circle-buttons ce-button"
+                    type="reset"
+                >
+                    CE
+                </button>
+                <button data-clear="c" class="circle-buttons">C</button>
+                <button data-operator="%" class="circle-buttons">%</button>
+                <button data-operator="/" class="circle-buttons operators">
+                    /
+                </button>
+                <button data-number="7" class="circle-buttons">7</button>
+                <button data-number="8" class="circle-buttons">8</button>
+                <button data-number="9" class="circle-buttons">9</button>
+                <button data-operator="*" class="circle-buttons operators">
+                    x
+                </button>
+                <button data-number="4" class="circle-buttons">4</button>
+                <button data-number="5" class="circle-buttons">5</button>
+                <button data-number="6" class="circle-buttons">6</button>
+                <button data-operator="-" class="circle-buttons operators">
+                    -
+                </button>
+                <button data-number="1" class="circle-buttons">1</button>
+                <button data-number="2" class="circle-buttons">2</button>
+                <button data-number="3" class="circle-buttons">3</button>
+                <button data-operator="+" class="circle-buttons operators">
+                    +
+                </button>
+                <button data-operator="alternate-number" class="circle-buttons">
+                    +/-
+                </button>
+                <button data-number="0" class="circle-buttons">0</button>
                 <button class="circle-buttons">,</button>
-                <button class="circle-buttons operators equal">=</button>
+                <button data-equal="=" class="circle-buttons operators equal">
+                    =
+                </button>
             </div>
         </section>
     </body>
