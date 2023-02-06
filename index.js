@@ -57,3 +57,10 @@ function calculate(firstNumber, operator, secondNumber) {
     }
     return result;
 }
+
+function showOnScreen(text) {
+    let spanText = document.createElement("span");
+    spanText.innerHTML = text;
+
+    displayCalculator.append(spanText);
+}

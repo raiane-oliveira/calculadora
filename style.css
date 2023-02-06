@@ -49,6 +49,7 @@ html {
     width: 4rem;
     height: 4rem;
     font: 1.5rem "Rubik", sans-serif;
+    line-height: 1rem;
 
     border-radius: 50%;
     border: none;
