@@ -69,7 +69,8 @@ document.addEventListener("click", (event) => {
     if (
         element.dataset.number ||
         element.dataset.operator ||
-        element.dataset.clear
+        element.dataset.clear ||
+        element.dataset.sign
     ) {
         showOnScreen(`<span>${expression}</span>`);
         displayCalculator.classList.remove("on-result-calculator");
@@ -84,10 +85,9 @@ document.addEventListener("click", (event) => {
                 <span>${result.toString().replace(".", ",")}</span>`);
 
         clearCalculator();
+
         // Salva o resultado para poder fazer contas com ele
-        // if (element.dataset.operator) {
         number1 = result;
-        // }
     }
 });
 
@@ -136,3 +136,5 @@ function formatNumbersIntoFloat(number) {
     }
     return Number(number);
 }
+
+// function putDotIn
