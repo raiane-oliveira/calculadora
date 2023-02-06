@@ -2,6 +2,7 @@ let displayCalculator = document.querySelector(".display-calculator");
 let operator = "";
 let number1 = "",
     number2 = "";
+let result = 0;
 
 document.addEventListener("click", (event) => {
     let element = event.target;
@@ -49,24 +50,30 @@ document.addEventListener("click", (event) => {
         }
     }
 
-    let result = calculate(Number(number1), operator, Number(number2));
+    result = calculate(
+        formatNumbersIntoFloat(number1),
+        operator,
+        formatNumbersIntoFloat(number2)
+    );
 
     // Permite mais cálculos de uma vez
-    if (operator && element.dataset.operator) {
+    let hasMoreCalculation = operator && element.dataset.operator && number2;
+    if (hasMoreCalculation) {
         number1 = result;
         operator = element.dataset.operator;
         number2 = "";
     }
 
-    let expression = `${number1} ${operator} ${number2}`;
+    let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
     showOnScreen(`<span>${expression}</span>`);
 
+    // Imprime no display da calculadora o resultado final
     if (element.dataset.equal) {
         displayCalculator.classList.add("on-result-calculator");
         showOnScreen(`
                 <p class="oldExpression">${expression}</p>
                 <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
-                <span>${result}</span>`);
+                <span>${result.toString().replace(".", ",")}</span>`);
 
         clearCalculator();
 
@@ -81,6 +88,7 @@ document.addEventListener("click", (event) => {
 
 function calculate(firstNumber, operator, secondNumber) {
     let result = 0;
+
     switch (operator) {
         case "+":
             result = firstNumber + secondNumber;
@@ -115,4 +123,11 @@ function clearCalculator(display = "") {
     number1 = "";
     number2 = "";
     operator = "";
+}
+
+function formatNumbersIntoFloat(number) {
+    if (typeof number === "string" && number.includes(",")) {
+        number = number.replace(",", ".");
+    }
+    return Number(number);
 }

@@ -26,14 +26,26 @@ html {
 }
 
 .display-calculator {
-    overflow-y: auto;
+    display: grid;
+    align-items: center;
+
     height: 8rem;
     padding: 0 1.2rem;
     font: 2.4rem "Rubik", sans-serif;
     color: white;
 
-    display: grid;
-    align-items: center;
+    overflow-y: auto;
+}
+
+.display-calculator::-webkit-scrollbar {
+    height: 0.4rem;
+    background-color: #2d2a37;
+    border-radius: 0.8rem;
+}
+
+.display-calculator::-webkit-scrollbar-thumb {
+    background-color: #975dfa;
+    border-radius: 1rem;
 }
 
 .on-result-calculator {
@@ -41,6 +53,7 @@ html {
     grid-template-areas:
         "expression expression"
         "equal result";
+    column-gap: 0.6rem;
 }
 
 .display-calculator span {
