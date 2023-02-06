@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body,
@@ -20,7 +21,7 @@ html {
         inset 0 6px 8px rgba(255, 255, 255, 0.1),
         inset 0 -4px 5px rgba(0, 0, 0, 0.22);
     padding: 2rem;
-    width: 300px;
+    width: 23rem;
     display: grid;
     row-gap: 1rem;
 }
