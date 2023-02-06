@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body,
@@ -21,9 +20,9 @@ html {
         inset 0 6px 8px rgba(255, 255, 255, 0.1),
         inset 0 -4px 5px rgba(0, 0, 0, 0.22);
     padding: 2rem;
-    width: 350px;
+    width: 300px;
     display: grid;
-    row-gap: 0.5rem;
+    row-gap: 1rem;
 }
 
 .display-calculator {
@@ -34,12 +33,14 @@ html {
     color: white;
 
     display: grid;
+    align-items: center;
+}
+
+.on-result-calculator {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "expression expression"
         "equal result";
-    align-items: center;
-    gap: 0.5rem;
 }
 
 .display-calculator span {
@@ -52,6 +53,7 @@ html {
     font-size: 1.4rem;
     grid-area: expression;
     justify-self: end;
+    padding-top: 1rem;
 }
 
 .equal-expression {

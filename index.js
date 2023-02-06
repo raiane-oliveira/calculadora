@@ -2,20 +2,20 @@ let displayCalculator = document.querySelector(".display-calculator");
 let operator = "";
 let number1 = "",
     number2 = "";
-let expression = "";
 
 document.addEventListener("click", (event) => {
     let element = event.target;
 
     if (element.dataset.clear === "c") {
-        displayCalculator.innerHTML = "";
-        clearCalculator();
+        clearCalculator(displayCalculator);
     }
 
+    // Pega o sinal
     if (element.dataset.operator) {
         operator = element.dataset.operator;
     }
 
+    // Pega os números
     if (element.dataset.number) {
         if (!operator) {
             // Substitui 0 pelo número digitado
@@ -23,19 +23,26 @@ document.addEventListener("click", (event) => {
                 number1 == 0
                     ? element.dataset.number
                     : number1 + element.dataset.number;
-            console.log(number1);
         } else {
             number2 =
                 number2 == 0
                     ? element.dataset.number
                     : number2 + element.dataset.number;
-            console.log(number2);
+        }
+    }
+
+    // Limpa o último número digitado
+    if (element.dataset.clear === "ce") {
+        if (!number2) {
+            number1 = 0;
+        } else {
+            number2 = 0;
         }
     }
 
     // Troca o sinal do número
     if (element.dataset.sign) {
-        if (!operator) {
+        if (!number2) {
             number1 *= -1;
         } else {
             number2 *= -1;
@@ -43,18 +50,32 @@ document.addEventListener("click", (event) => {
     }
 
     let result = calculate(Number(number1), operator, Number(number2));
-    expression = `${number1} ${operator} ${number2}`;
-    console.log(expression);
-    showOnScreen(expression);
+
+    // Permite mais cálculos de uma vez
+    if (operator && element.dataset.operator) {
+        number1 = result;
+        operator = element.dataset.operator;
+        number2 = "";
+    }
+
+    let expression = `${number1} ${operator} ${number2}`;
+    showOnScreen(`<span>${expression}</span>`);
 
     if (element.dataset.equal) {
-        displayCalculator.innerHTML = `
-        <p class="oldExpression">${expression}</p>
-        <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
-        <span>${result}</span>`;
+        displayCalculator.classList.add("on-result-calculator");
+        showOnScreen(`
+                <p class="oldExpression">${expression}</p>
+                <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
+                <span>${result}</span>`);
 
-        // Limpa todos os campos
         clearCalculator();
+
+        // Salva o resultado para poder fazer contas com ele
+        if (element.dataset.operator) {
+            number1 = result;
+        }
+    } else {
+        displayCalculator.classList.remove("on-result-calculator");
     }
 });
 
@@ -84,10 +105,13 @@ function calculate(firstNumber, operator, secondNumber) {
 }
 
 function showOnScreen(text) {
-    displayCalculator.innerHTML = `<span>${text}</span>`;
+    displayCalculator.innerHTML = text;
 }
 
-function clearCalculator() {
+function clearCalculator(display = "") {
+    if (display) {
+        displayCalculator.innerHTML = "";
+    }
     number1 = "";
     number2 = "";
     operator = "";
