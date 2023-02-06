@@ -100,10 +100,10 @@ html {
         inset 0 2px 3px 0 rgba(255, 255, 255, 0.06);
 
     color: #ebebeb;
-    cursor: pointer;
 }
 
 .circle-buttons:hover {
+    cursor: pointer;
     opacity: 0.8;
 }
 

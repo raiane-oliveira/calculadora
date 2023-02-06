@@ -35,9 +35,9 @@ document.addEventListener("click", (event) => {
     // Limpa o último número digitado
     if (element.dataset.clear === "ce") {
         if (!number2) {
-            number1 = 0;
+            number1 = "";
         } else {
-            number2 = 0;
+            number2 = "";
         }
     }
 
@@ -50,12 +50,6 @@ document.addEventListener("click", (event) => {
         }
     }
 
-    result = calculate(
-        formatNumbersIntoFloat(number1),
-        operator,
-        formatNumbersIntoFloat(number2)
-    );
-
     // Permite mais cálculos de uma vez
     let hasMoreCalculation = operator && element.dataset.operator && number2;
     if (hasMoreCalculation) {
@@ -64,8 +58,18 @@ document.addEventListener("click", (event) => {
         number2 = "";
     }
 
+    result = calculate(
+        formatNumbersIntoFloat(number1),
+        operator,
+        formatNumbersIntoFloat(number2)
+    );
+
     let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
-    showOnScreen(`<span>${expression}</span>`);
+
+    if (element.dataset.number || element.dataset.operator) {
+        showOnScreen(`<span>${expression}</span>`);
+        displayCalculator.classList.remove("on-result-calculator");
+    }
 
     // Imprime no display da calculadora o resultado final
     if (element.dataset.equal) {
@@ -76,13 +80,10 @@ document.addEventListener("click", (event) => {
                 <span>${result.toString().replace(".", ",")}</span>`);
 
         clearCalculator();
-
         // Salva o resultado para poder fazer contas com ele
-        if (element.dataset.operator) {
-            number1 = result;
-        }
-    } else {
-        displayCalculator.classList.remove("on-result-calculator");
+        // if (element.dataset.operator) {
+        number1 = result;
+        // }
     }
 });
 
