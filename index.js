@@ -19,7 +19,7 @@ document.addEventListener("click", (event) => {
     // Pega os números
     if (element.dataset.number) {
         if (!operator) {
-            // Substitui 0 pelo número digitado
+            // Substitui 0 pelo número digitado e depois do resultado
             number1 =
                 number1 == 0
                     ? element.dataset.number
@@ -36,6 +36,7 @@ document.addEventListener("click", (event) => {
     if (element.dataset.clear === "ce") {
         if (!number2) {
             number1 = 0;
+            operator = "";
         } else {
             number2 = 0;
         }
@@ -51,7 +52,7 @@ document.addEventListener("click", (event) => {
     }
 
     // Permite mais cálculos de uma vez
-    let hasMoreCalculation = operator && element.dataset.operator && number2;
+    let hasMoreCalculation = element.dataset.operator && number2;
     if (hasMoreCalculation) {
         number1 = result;
         operator = element.dataset.operator;
@@ -80,10 +81,10 @@ document.addEventListener("click", (event) => {
     if (element.dataset.equal) {
         displayCalculator.classList.add("on-result-calculator");
         showOnScreen(`
-                <p class="oldExpression">${expression}</p>
-                <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
-                <span>${result.toString().replace(".", ",")}</span>`);
-
+            <p class="oldExpression">${expression}</p>
+            <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
+            <span>${result.toString().replace(".", ",")}</span>
+        `);
         clearCalculator();
 
         // Salva o resultado para poder fazer contas com ele
@@ -136,5 +137,3 @@ function formatNumbersIntoFloat(number) {
     }
     return Number(number);
 }
-
-// function putDotIn
