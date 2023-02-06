@@ -35,9 +35,9 @@ document.addEventListener("click", (event) => {
     // Limpa o último número digitado
     if (element.dataset.clear === "ce") {
         if (!number2) {
-            number1 = "";
+            number1 = 0;
         } else {
-            number2 = "";
+            number2 = 0;
         }
     }
 
@@ -66,7 +66,11 @@ document.addEventListener("click", (event) => {
 
     let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
 
-    if (element.dataset.number || element.dataset.operator) {
+    if (
+        element.dataset.number ||
+        element.dataset.operator ||
+        element.dataset.clear
+    ) {
         showOnScreen(`<span>${expression}</span>`);
         displayCalculator.classList.remove("on-result-calculator");
     }
