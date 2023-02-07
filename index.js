@@ -1,8 +1,9 @@
 let displayCalculator = document.querySelector(".display-calculator");
-let operator = "";
-let number1 = "",
-    number2 = "";
-let result = 0;
+let operator = "",
+    number1 = "",
+    number2 = "",
+    result = 0,
+    hasResult = false;
 
 document.addEventListener("click", (event) => {
     let element = event.target;
@@ -21,9 +22,10 @@ document.addEventListener("click", (event) => {
         if (!operator) {
             // Substitui 0 pelo número digitado e depois do resultado
             number1 =
-                number1 == 0
+                number1 == 0 || hasResult
                     ? element.dataset.number
                     : number1 + element.dataset.number;
+            hasResult = false;
         } else {
             number2 =
                 number2 == 0
@@ -53,17 +55,21 @@ document.addEventListener("click", (event) => {
 
     // Permite mais cálculos de uma vez
     let hasMoreCalculation = element.dataset.operator && number2;
-    if (hasMoreCalculation) {
-        number1 = result;
-        operator = element.dataset.operator;
-        number2 = "";
-    }
+    calculateMoreCalculations(hasMoreCalculation, element.dataset.operator);
 
     result = calculate(
         formatNumbersIntoFloat(number1),
         operator,
         formatNumbersIntoFloat(number2)
     );
+
+    // Formata números decimais para incluírem o zero
+    if (number1 === ",") {
+        number1 = "0" + number1;
+    }
+    if (number2 === ",") {
+        number2 = "0" + number2;
+    }
 
     let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
 
@@ -89,6 +95,7 @@ document.addEventListener("click", (event) => {
 
         // Salva o resultado para poder fazer contas com ele
         number1 = result;
+        hasResult = true;
     }
 });
 
@@ -136,4 +143,12 @@ function formatNumbersIntoFloat(number) {
         number = number.replace(",", ".");
     }
     return Number(number);
+}
+
+function calculateMoreCalculations(condicional, operatorClicked) {
+    if (condicional) {
+        number1 = result;
+        operator = operatorClicked;
+        number2 = "";
+    }
 }
