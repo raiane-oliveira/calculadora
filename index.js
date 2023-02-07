@@ -23,7 +23,7 @@ function runCalculator(element) {
     // Pega os números
     if (element.dataset.number) {
         if (!operator) {
-            // Substitui 0 pelo número digitado e depois do resultado
+            // Substitui 0 pelo número digitado
             number1 =
                 number1 == 0 || hasResult
                     ? element.dataset.number
