@@ -7,7 +7,10 @@ let operator = "",
 
 document.addEventListener("click", (event) => {
     let element = event.target;
+    runCalculator(element);
+});
 
+function runCalculator(element) {
     if (element.dataset.clear === "c") {
         clearCalculator(displayCalculator);
     }
@@ -64,12 +67,8 @@ document.addEventListener("click", (event) => {
     );
 
     // Formata números decimais para incluírem o zero
-    if (number1 === ",") {
-        number1 = "0" + number1;
-    }
-    if (number2 === ",") {
-        number2 = "0" + number2;
-    }
+    number1 = number1 === "," ? "0" + number1 : number1;
+    number2 = number2 === "," ? "0" + number2 : number2;
 
     let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
 
@@ -97,7 +96,7 @@ document.addEventListener("click", (event) => {
         number1 = result;
         hasResult = true;
     }
-});
+}
 
 function calculate(firstNumber, operator, secondNumber) {
     let result = 0;
