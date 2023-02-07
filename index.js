@@ -37,6 +37,10 @@ function runCalculator(element) {
         }
     }
 
+    // Formata números decimais para incluírem o zero
+    number1 = number1 === "," ? "0" + number1 : number1;
+    number2 = number2 === "," ? "0" + number2 : number2;
+
     // Limpa o último número digitado
     if (element.dataset.clear === "ce") {
         if (!number2) {
@@ -65,11 +69,6 @@ function runCalculator(element) {
         operator,
         formatNumbersIntoFloat(number2)
     );
-
-    // Formata números decimais para incluírem o zero
-    number1 = number1 === "," ? "0" + number1 : number1;
-    number2 = number2 === "," ? "0" + number2 : number2;
-
     let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
 
     if (
@@ -88,7 +87,7 @@ function runCalculator(element) {
         showOnScreen(`
             <p class="oldExpression">${expression}</p>
             <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
-            <span>${result.toString().replace(".", ",")}</span>
+            <span class="result">${result.toString().replace(".", ",")}</span>
         `);
         clearCalculator();
 
