@@ -10,7 +10,7 @@ document
     .addEventListener("click", (event) => runCalculator(event.target.dataset));
 
 document.addEventListener("keydown", (event) => {
-    let keyPress;
+    let keyPress = {};
     if (!isNaN(event.key) || event.key === ",") {
         keyPress = { number: event.key };
     } else if (
