@@ -12,8 +12,8 @@ document
     });
 
 function runCalculator(element) {
-    if (element.dataset.clear === "c") {
-        clearOfCalculator("display");
+    if (element.dataset.clear) {
+        clearCalculatorWithButton(element.dataset.clear);
     }
 
     // Pega o sinal
@@ -39,16 +39,6 @@ function runCalculator(element) {
     firstNumber = firstNumber === "," ? "0" + firstNumber : firstNumber;
     secondNumber = secondNumber === "," ? "0" + secondNumber : secondNumber;
 
-    // Limpa o último número digitado
-    if (element.dataset.clear === "ce") {
-        if (!secondNumber) {
-            firstNumber = 0;
-            clearOfCalculator("operator");
-        } else {
-            secondNumber = 0;
-        }
-    }
-
     // Troca o sinal do número
     if (element.dataset.sign) {
         if (!secondNumber) {
@@ -67,11 +57,11 @@ function runCalculator(element) {
         operator,
         formatNumbersIntoFloat(secondNumber)
     );
+
     let expression = `${firstNumber} ${operator} ${secondNumber}`.replace(
         ".",
         ","
     );
-
     showOnScreenCalculator(element.dataset.equal, expression);
 }
 
@@ -150,6 +140,19 @@ function clearOfCalculator(option) {
             break;
         default:
             throw new Error("Invalid option!");
+    }
+}
+
+function clearCalculatorWithButton(btnClicked) {
+    if (btnClicked === "c") {
+        clearOfCalculator("display");
+    } else if (btnClicked === "ce") {
+        if (!secondNumber) {
+            firstNumber = 0;
+            clearOfCalculator("operator");
+        } else {
+            secondNumber = 0;
+        }
     }
 }
 
