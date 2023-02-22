@@ -21,24 +21,21 @@ function runCalculator(element) {
         operator = element.dataset.operator;
     }
 
-    // Pega os números
     if (element.dataset.number) {
         if (!operator) {
-            // Substitui 0 pelo número digitado
-            firstNumber =
-                firstNumber == 0 || hasResult
-                    ? element.dataset.number
-                    : firstNumber + element.dataset.number;
-            hasResult = false;
+            firstNumber = getNumberOfCalculation(
+                element.dataset.number,
+                firstNumber
+            );
         } else {
-            secondNumber =
-                secondNumber == 0
-                    ? element.dataset.number
-                    : secondNumber + element.dataset.number;
+            secondNumber = getNumberOfCalculation(
+                element.dataset.number,
+                secondNumber
+            );
         }
     }
 
-    // Formata números decimais para incluírem o zero
+    // Adiciona o zero antes da vírgula se ele não foi digitado
     firstNumber = firstNumber === "," ? "0" + firstNumber : firstNumber;
     secondNumber = secondNumber === "," ? "0" + secondNumber : secondNumber;
 
@@ -75,28 +72,13 @@ function runCalculator(element) {
         ","
     );
 
-    // Imprime na tela o cálculo que o user tá fazendo
-    if (!element.dataset.equal) {
-        showOnScreen(`<span>${expression}</span>`);
-        displayCalculator.classList.remove("on-result-calculator");
-    }
+    showOnScreenCalculator(element.dataset.equal, expression);
+}
 
-    // Imprime na tela o resultado final
-    if (element.dataset.equal) {
-        displayCalculator.classList.add("on-result-calculator");
-        showOnScreen(`
-            <p class="oldExpression">${expression}</p>
-            <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
-            <span class="result">${result.toString().replace(".", ",")}</span>
-        `);
-        clearOfCalculator("firstNumber");
-        clearOfCalculator("secondNumber");
-        clearOfCalculator("operator");
-
-        // Salva o resultado para poder fazer contas com ele
-        firstNumber = result;
-        hasResult = true;
-    }
+function getNumberOfCalculation(numberClicked, num) {
+    hasResult = false;
+    num = num == 0 || hasResult ? numberClicked : num + numberClicked;
+    return num;
 }
 
 function calculate(num1, operator, num2) {
@@ -124,8 +106,29 @@ function calculate(num1, operator, num2) {
     return result;
 }
 
-function showOnScreen(text) {
-    displayCalculator.innerHTML = text;
+function showOnScreenCalculator(equalSign, expressionCalculation) {
+    // Imprime na tela o cálculo que o user tá fazendo
+    if (!equalSign) {
+        displayCalculator.innerHTML = `<span>${expressionCalculation}</span>`;
+        displayCalculator.classList.remove("on-result-calculator");
+    }
+
+    // Imprime na tela o resultado final
+    else {
+        displayCalculator.classList.add("on-result-calculator");
+        displayCalculator.innerHTML = `
+            <p class="oldExpression">${expressionCalculation}</p>
+            <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
+            <span class="result">${result.toString().replace(".", ",")}</span>
+        `;
+        clearOfCalculator("firstNumber");
+        clearOfCalculator("secondNumber");
+        clearOfCalculator("operator");
+
+        // Salva o resultado da conta
+        firstNumber = result;
+        hasResult = true;
+    }
 }
 
 function clearOfCalculator(option) {
