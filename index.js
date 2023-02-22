@@ -6,8 +6,7 @@ let operator = "",
     hasResult = false;
 
 document.addEventListener("click", (event) => {
-    let element = event.target;
-    runCalculator(element);
+    runCalculator(event.target);
 });
 
 function runCalculator(element) {
@@ -71,17 +70,13 @@ function runCalculator(element) {
     );
     let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
 
-    if (
-        element.dataset.number ||
-        element.dataset.operator ||
-        element.dataset.clear ||
-        element.dataset.sign
-    ) {
+    // Imprime na tela o cálculo que o user tá fazendo
+    if (!element.dataset.equal) {
         showOnScreen(`<span>${expression}</span>`);
         displayCalculator.classList.remove("on-result-calculator");
     }
 
-    // Imprime no display da calculadora o resultado final
+    // Imprime na tela o resultado final
     if (element.dataset.equal) {
         displayCalculator.classList.add("on-result-calculator");
         showOnScreen(`
@@ -118,7 +113,6 @@ function calculate(firstNumber, operator, secondNumber) {
             break;
         default:
             result = firstNumber ? firstNumber : secondNumber;
-            break;
     }
     return result;
 }
