@@ -161,10 +161,10 @@ function clearCalculatorWithButton(btnClicked) {
         clearOfCalculator("display");
     } else if (btnClicked === "ce") {
         if (!secondNumber) {
-            firstNumber = 0;
+            firstNumber = "";
             clearOfCalculator("operator");
         } else {
-            secondNumber = 0;
+            secondNumber = "";
         }
     }
 }
