@@ -7,19 +7,13 @@ let operator = "",
 
 document
     .querySelector(".functionalities-calculator")
-    .addEventListener("click", (event) => {
-        runCalculator(event.target);
-    });
+    .addEventListener("click", (event) => runCalculator(event.target));
 
 function runCalculator(element) {
-    if (element.dataset.clear) {
-        clearCalculatorWithButton(element.dataset.clear);
-    }
+    if (element.dataset.clear) clearCalculatorWithButton(element.dataset.clear);
 
     // Pega o sinal
-    if (element.dataset.operator) {
-        operator = element.dataset.operator;
-    }
+    if (element.dataset.operator) operator = element.dataset.operator;
 
     if (element.dataset.number) {
         if (!operator) {
@@ -40,14 +34,14 @@ function runCalculator(element) {
     secondNumber = secondNumber === "," ? "0" + secondNumber : secondNumber;
 
     // Troca o sinal do número
-    if (element.dataset.sign) {
-        swapNumberSign(element.dataset.sign);
-    }
+    if (element.dataset.sign) swapNumberSign(element.dataset.sign);
 
     // Permite mais cálculos de uma vez
     let hasMoreCalculation = element.dataset.operator && secondNumber;
     if (hasMoreCalculation) {
-        modifyElementsToMoreCalculations(element.dataset.operator);
+        firstNumber = result;
+        operator = operatorClicked;
+        clearOfCalculator("secondNumber");
     }
 
     result = calculate(
@@ -161,16 +155,7 @@ function formatNumbersIntoFloat(number) {
     return Number(number);
 }
 
-function modifyElementsToMoreCalculations(operatorClicked) {
-    firstNumber = result;
-    operator = operatorClicked;
-    clearOfCalculator("secondNumber");
-}
-
 function swapNumberSign(sign) {
-    if (!secondNumber) {
-        firstNumber *= -1;
-    } else {
-        secondNumber *= -1;
-    }
+    if (!secondNumber) firstNumber *= -1;
+    else secondNumber *= -1;
 }
