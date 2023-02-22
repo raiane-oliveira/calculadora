@@ -7,25 +7,43 @@ let operator = "",
 
 document
     .querySelector(".functionalities-calculator")
-    .addEventListener("click", (event) => runCalculator(event.target));
+    .addEventListener("click", (event) => runCalculator(event.target.dataset));
+
+document.addEventListener("keydown", (event) => {
+    let keyPress;
+    if (!isNaN(event.key) || event.key === ",") {
+        keyPress = { number: event.key };
+    } else if (
+        event.key === "+" ||
+        event.key === "-" ||
+        event.key === "*" ||
+        event.key === "/" ||
+        event.key === "%"
+    ) {
+        keyPress = { operator: event.key };
+    } else if (event.key === "Escape") {
+        keyPress = { clear: "c" };
+    } else if (event.key === "Delete" || event.key === "Backspace") {
+        keyPress = { clear: "ce" };
+    } else if (event.key === "Enter" || event.key === "=") {
+        keyPress = { equal: "=" };
+    }
+
+    runCalculator(keyPress);
+});
 
 function runCalculator(element) {
-    if (element.dataset.clear) clearCalculatorWithButton(element.dataset.clear);
+    console.log(element.dataset);
+    if (element.clear) clearCalculatorWithButton(element.clear);
 
     // Pega o sinal
-    if (element.dataset.operator) operator = element.dataset.operator;
+    if (element.operator) operator = element.operator;
 
-    if (element.dataset.number) {
+    if (element.number) {
         if (!operator) {
-            firstNumber = getNumberOfCalculation(
-                element.dataset.number,
-                firstNumber
-            );
+            firstNumber = getNumberOfCalculation(element.number, firstNumber);
         } else {
-            secondNumber = getNumberOfCalculation(
-                element.dataset.number,
-                secondNumber
-            );
+            secondNumber = getNumberOfCalculation(element.number, secondNumber);
         }
     }
 
@@ -34,10 +52,10 @@ function runCalculator(element) {
     secondNumber = secondNumber === "," ? "0" + secondNumber : secondNumber;
 
     // Troca o sinal do número
-    if (element.dataset.sign) swapNumberSign(element.dataset.sign);
+    if (element.sign) swapNumberSign(element.sign);
 
     // Permite mais cálculos de uma vez
-    let hasMoreCalculation = element.dataset.operator && secondNumber;
+    let hasMoreCalculation = element.operator && secondNumber;
     if (hasMoreCalculation) {
         firstNumber = result;
         operator = operatorClicked;
@@ -58,7 +76,7 @@ function runCalculator(element) {
         ".",
         ","
     );
-    showOnCalculatorScreen(element.dataset.equal, expression);
+    showOnCalculatorScreen(element.equal, expression);
 }
 
 function getNumberOfCalculation(numberClicked, num) {
