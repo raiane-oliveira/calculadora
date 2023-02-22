@@ -58,8 +58,8 @@ function runCalculator(element) {
 }
 
 function getNumberOfCalculation(numberClicked, num) {
-    hasResult = false;
     num = num == 0 || hasResult ? numberClicked : num + numberClicked;
+    hasResult = false;
     return num;
 }
 
