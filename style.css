@@ -70,6 +70,10 @@ html {
     padding-top: 1rem;
 }
 
+.oldExpression img {
+    height: 1rem;
+}
+
 .equal-expression {
     opacity: 0.4;
     height: 1.4rem;

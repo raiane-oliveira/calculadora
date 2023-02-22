@@ -1,5 +1,6 @@
 let displayCalculator = document.querySelector(".display-calculator");
 let operator = "",
+    imgOperator,
     firstNumber = "",
     secondNumber = "",
     result = 0,
@@ -85,10 +86,9 @@ function runCalculator(element) {
     if (operator && !firstNumber && !secondNumber)
         clearOfCalculator("operator");
 
-    let expression = `${firstNumber} ${operator} ${secondNumber}`.replace(
-        ".",
-        ","
-    );
+    let expression = `${firstNumber.replace(".", ",")} 
+                      ${imgOperator} 
+                      ${secondNumber.replace(".", ",")}`;
     showOnCalculatorScreen(element.equal, expression);
 }
 
@@ -104,21 +104,27 @@ function calculate(num1, operator, num2) {
     switch (operator) {
         case "+":
             result = num1 + num2;
+            imgOperator = "<img src='assets/Plus.svg' alt='Plus'/>";
             break;
         case "-":
             result = num1 - num2;
+            imgOperator = "<img src='assets/Minus.svg' alt='Minus'/>";
             break;
-        case "x":
+        case "*":
             result = num1 * num2;
+            imgOperator = "<img src='assets/X.svg' alt='X'/>";
             break;
         case "/":
             result = num1 / num2;
+            imgOperator = "<img src='assets/Divide.svg' alt='Divide'/>";
             break;
         case "%":
             result = (num1 * num2) / 100;
+            imgOperator = "<img src='assets/Percent.svg' alt='Percent'/>";
             break;
         default:
             result = num1 ? num1 : num2;
+            imgOperator = "";
     }
     return result;
 }
