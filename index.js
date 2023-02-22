@@ -12,8 +12,7 @@ document
 
 document.addEventListener("keydown", (event) => {
     let keyPress = {};
-    console.log(parseFloat(event.key));
-    if (parseFloat(event.key) || event.key === ",") {
+    if (event.key.search(/[0-9]/) !== -1 || event.key === ",") {
         keyPress = { number: event.key };
     } else if (
         event.key === "+" ||
