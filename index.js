@@ -36,7 +36,7 @@ function runCalculator(element) {
     console.log(element.dataset);
     if (element.clear) clearCalculatorWithButton(element.clear);
 
-    // Pega o sinal
+    // Pega o operador
     if (element.operator) operator = element.operator;
 
     if (element.number) {
