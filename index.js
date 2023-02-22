@@ -50,6 +50,11 @@ function runCalculator(element) {
         formatNumbersIntoFloat(secondNumber)
     );
 
+    // Impede que o operador seja impresso na tela sem números
+    if (operator && !firstNumber && !secondNumber) {
+        operator = "";
+    }
+
     let expression = `${firstNumber} ${operator} ${secondNumber}`.replace(
         ".",
         ","
