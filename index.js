@@ -51,9 +51,8 @@ function runCalculator(element) {
     );
 
     // Impede que o operador seja impresso na tela sem números
-    if (operator && !firstNumber && !secondNumber) {
-        operator = "";
-    }
+    if (operator && !firstNumber && !secondNumber)
+        clearOfCalculator("operator");
 
     let expression = `${firstNumber} ${operator} ${secondNumber}`.replace(
         ".",
