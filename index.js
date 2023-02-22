@@ -23,8 +23,10 @@ document.addEventListener("keydown", (event) => {
         keyPress = { operator: event.key };
     } else if (event.key === "Escape") {
         clearCalculatorWithButton("c");
+        return;
     } else if (event.key === "Delete") {
         clearCalculatorWithButton("ce");
+        return;
     } else if (event.key === "Enter" || event.key === "=") {
         keyPress = { equal: "=" };
     } else if (event.key === "Backspace") {
