@@ -76,9 +76,9 @@ function runCalculator(element) {
     }
 
     result = calculate(
-        formatNumbersIntoFloat(firstNumber),
+        parseFloat(firstNumber.replace(",", ".")),
         operator,
-        formatNumbersIntoFloat(secondNumber)
+        parseFloat(secondNumber.replace(",", "."))
     );
 
     // Impede que o operador seja impresso na tela sem números
@@ -181,13 +181,6 @@ function clearCalculatorWithButton(btnClicked) {
             secondNumber = "";
         }
     }
-}
-
-function formatNumbersIntoFloat(number) {
-    if (typeof number === "string" && number.includes(",")) {
-        number = number.replace(",", ".");
-    }
-    return Number(number);
 }
 
 function swapNumberSign(sign) {
