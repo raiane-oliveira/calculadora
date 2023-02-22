@@ -41,16 +41,14 @@ function runCalculator(element) {
 
     // Troca o sinal do número
     if (element.dataset.sign) {
-        if (!secondNumber) {
-            firstNumber *= -1;
-        } else {
-            secondNumber *= -1;
-        }
+        swapNumberSign(element.dataset.sign);
     }
 
     // Permite mais cálculos de uma vez
     let hasMoreCalculation = element.dataset.operator && secondNumber;
-    calculateMoreCalculations(hasMoreCalculation, element.dataset.operator);
+    if (hasMoreCalculation) {
+        modifyElementsToMoreCalculations(element.dataset.operator);
+    }
 
     result = calculate(
         formatNumbersIntoFloat(firstNumber),
@@ -62,7 +60,7 @@ function runCalculator(element) {
         ".",
         ","
     );
-    showOnScreenCalculator(element.dataset.equal, expression);
+    showOnCalculatorScreen(element.dataset.equal, expression);
 }
 
 function getNumberOfCalculation(numberClicked, num) {
@@ -96,7 +94,7 @@ function calculate(num1, operator, num2) {
     return result;
 }
 
-function showOnScreenCalculator(equalSign, expressionCalculation) {
+function showOnCalculatorScreen(equalSign, expressionCalculation) {
     // Imprime na tela o cálculo que o user tá fazendo
     if (!equalSign) {
         displayCalculator.innerHTML = `<span>${expressionCalculation}</span>`;
@@ -163,10 +161,16 @@ function formatNumbersIntoFloat(number) {
     return Number(number);
 }
 
-function calculateMoreCalculations(condicional, operatorClicked) {
-    if (condicional) {
-        firstNumber = result;
-        operator = operatorClicked;
-        clearOfCalculator("secondNumber");
+function modifyElementsToMoreCalculations(operatorClicked) {
+    firstNumber = result;
+    operator = operatorClicked;
+    clearOfCalculator("secondNumber");
+}
+
+function swapNumberSign(sign) {
+    if (!secondNumber) {
+        firstNumber *= -1;
+    } else {
+        secondNumber *= -1;
     }
 }
