@@ -1,17 +1,19 @@
 let displayCalculator = document.querySelector(".display-calculator");
 let operator = "",
-    number1 = "",
-    number2 = "",
+    firstNumber = "",
+    secondNumber = "",
     result = 0,
     hasResult = false;
 
-document.addEventListener("click", (event) => {
-    runCalculator(event.target);
-});
+document
+    .querySelector(".functionalities-calculator")
+    .addEventListener("click", (event) => {
+        runCalculator(event.target);
+    });
 
 function runCalculator(element) {
     if (element.dataset.clear === "c") {
-        clearCalculator(displayCalculator);
+        clearOfCalculator("display");
     }
 
     // Pega o sinal
@@ -23,52 +25,55 @@ function runCalculator(element) {
     if (element.dataset.number) {
         if (!operator) {
             // Substitui 0 pelo número digitado
-            number1 =
-                number1 == 0 || hasResult
+            firstNumber =
+                firstNumber == 0 || hasResult
                     ? element.dataset.number
-                    : number1 + element.dataset.number;
+                    : firstNumber + element.dataset.number;
             hasResult = false;
         } else {
-            number2 =
-                number2 == 0
+            secondNumber =
+                secondNumber == 0
                     ? element.dataset.number
-                    : number2 + element.dataset.number;
+                    : secondNumber + element.dataset.number;
         }
     }
 
     // Formata números decimais para incluírem o zero
-    number1 = number1 === "," ? "0" + number1 : number1;
-    number2 = number2 === "," ? "0" + number2 : number2;
+    firstNumber = firstNumber === "," ? "0" + firstNumber : firstNumber;
+    secondNumber = secondNumber === "," ? "0" + secondNumber : secondNumber;
 
     // Limpa o último número digitado
     if (element.dataset.clear === "ce") {
-        if (!number2) {
-            number1 = 0;
-            operator = "";
+        if (!secondNumber) {
+            firstNumber = 0;
+            clearOfCalculator("operator");
         } else {
-            number2 = 0;
+            secondNumber = 0;
         }
     }
 
     // Troca o sinal do número
     if (element.dataset.sign) {
-        if (!number2) {
-            number1 *= -1;
+        if (!secondNumber) {
+            firstNumber *= -1;
         } else {
-            number2 *= -1;
+            secondNumber *= -1;
         }
     }
 
     // Permite mais cálculos de uma vez
-    let hasMoreCalculation = element.dataset.operator && number2;
+    let hasMoreCalculation = element.dataset.operator && secondNumber;
     calculateMoreCalculations(hasMoreCalculation, element.dataset.operator);
 
     result = calculate(
-        formatNumbersIntoFloat(number1),
+        formatNumbersIntoFloat(firstNumber),
         operator,
-        formatNumbersIntoFloat(number2)
+        formatNumbersIntoFloat(secondNumber)
     );
-    let expression = `${number1} ${operator} ${number2}`.replace(".", ",");
+    let expression = `${firstNumber} ${operator} ${secondNumber}`.replace(
+        ".",
+        ","
+    );
 
     // Imprime na tela o cálculo que o user tá fazendo
     if (!element.dataset.equal) {
@@ -84,35 +89,37 @@ function runCalculator(element) {
             <img class="equal-expression" src="assets/Equals.svg" alt="Equal">
             <span class="result">${result.toString().replace(".", ",")}</span>
         `);
-        clearCalculator();
+        clearOfCalculator("firstNumber");
+        clearOfCalculator("secondNumber");
+        clearOfCalculator("operator");
 
         // Salva o resultado para poder fazer contas com ele
-        number1 = result;
+        firstNumber = result;
         hasResult = true;
     }
 }
 
-function calculate(firstNumber, operator, secondNumber) {
+function calculate(num1, operator, num2) {
     let result = 0;
 
     switch (operator) {
         case "+":
-            result = firstNumber + secondNumber;
+            result = num1 + num2;
             break;
         case "-":
-            result = firstNumber - secondNumber;
+            result = num1 - num2;
             break;
         case "x":
-            result = firstNumber * secondNumber;
+            result = num1 * num2;
             break;
         case "/":
-            result = firstNumber / secondNumber;
+            result = num1 / num2;
             break;
         case "%":
-            result = (firstNumber * secondNumber) / 100;
+            result = (num1 * num2) / 100;
             break;
         default:
-            result = firstNumber ? firstNumber : secondNumber;
+            result = num1 ? num1 : num2;
     }
     return result;
 }
@@ -121,13 +128,26 @@ function showOnScreen(text) {
     displayCalculator.innerHTML = text;
 }
 
-function clearCalculator(display = "") {
-    if (display) {
-        displayCalculator.innerHTML = "";
+function clearOfCalculator(option) {
+    switch (option) {
+        case "display":
+            displayCalculator.innerHTML = "";
+            firstNumber = "";
+            secondNumber = "";
+            operator = "";
+            break;
+        case "firstNumber":
+            firstNumber = "";
+            break;
+        case "secondNumber":
+            secondNumber = "";
+            break;
+        case "operator":
+            operator = "";
+            break;
+        default:
+            throw new Error("Invalid option!");
     }
-    number1 = "";
-    number2 = "";
-    operator = "";
 }
 
 function formatNumbersIntoFloat(number) {
@@ -139,8 +159,8 @@ function formatNumbersIntoFloat(number) {
 
 function calculateMoreCalculations(condicional, operatorClicked) {
     if (condicional) {
-        number1 = result;
+        firstNumber = result;
         operator = operatorClicked;
-        number2 = "";
+        clearOfCalculator("secondNumber");
     }
 }
