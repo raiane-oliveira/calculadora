@@ -23,10 +23,12 @@ document.addEventListener("keydown", (event) => {
         keyPress = { operator: event.key };
     } else if (event.key === "Escape") {
         clearCalculatorWithButton("c");
-    } else if (event.key === "Delete" || event.key === "Backspace") {
+    } else if (event.key === "Delete") {
         clearCalculatorWithButton("ce");
     } else if (event.key === "Enter" || event.key === "=") {
         keyPress = { equal: "=" };
+    } else if (event.key === "Backspace") {
+        keyPress = { clear: "delete" };
     }
 
     runCalculator(keyPress);
@@ -34,6 +36,16 @@ document.addEventListener("keydown", (event) => {
 
 function runCalculator(element) {
     if (element.clear) clearCalculatorWithButton(element.clear);
+
+    if (element.clear === "delete") {
+        if (firstNumber && !operator) {
+            firstNumber = removeLastDigitOfCalculator(firstNumber);
+        } else if (secondNumber && operator) {
+            secondNumber = removeLastDigitOfCalculator(secondNumber);
+        } else if (operator && !secondNumber) {
+            operator = removeLastDigitOfCalculator(operator);
+        }
+    }
 
     // Pega o operador
     if (element.operator) operator = element.operator;
@@ -179,4 +191,10 @@ function formatNumbersIntoFloat(number) {
 function swapNumberSign(sign) {
     if (!secondNumber) firstNumber *= -1;
     else secondNumber *= -1;
+}
+
+function removeLastDigitOfCalculator(string) {
+    let stringSplit = string.split("");
+    stringSplit.pop();
+    return stringSplit.join("");
 }
