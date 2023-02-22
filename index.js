@@ -12,6 +12,7 @@ document
 
 document.addEventListener("keydown", (event) => {
     let keyPress = {};
+    console.log(parseFloat(event.key));
     if (parseFloat(event.key) || event.key === ",") {
         keyPress = { number: event.key };
     } else if (
@@ -77,18 +78,18 @@ function runCalculator(element) {
     }
 
     result = calculate(
-        parseFloat(firstNumber.replace(",", ".")),
+        parseFloat(firstNumber.toString().replace(",", ".")),
         operator,
-        parseFloat(secondNumber.replace(",", "."))
+        parseFloat(secondNumber.toString().replace(",", "."))
     );
 
     // Impede que o operador seja impresso na tela sem números
     if (operator && !firstNumber && !secondNumber)
         clearOfCalculator("operator");
 
-    let expression = `${firstNumber.replace(".", ",")} 
+    let expression = `${firstNumber.toString().replace(".", ",")} 
                       ${imgOperator} 
-                      ${secondNumber.replace(".", ",")}`;
+                      ${secondNumber.toString().replace(".", ",")}`;
     showOnCalculatorScreen(element.equal, expression);
 }
 
