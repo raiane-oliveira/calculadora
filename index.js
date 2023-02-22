@@ -11,7 +11,7 @@ document
 
 document.addEventListener("keydown", (event) => {
     let keyPress = {};
-    if (!isNaN(event.key) || event.key === ",") {
+    if (parseFloat(event.key) || event.key === ",") {
         keyPress = { number: event.key };
     } else if (
         event.key === "+" ||
