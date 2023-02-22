@@ -22,9 +22,9 @@ document.addEventListener("keydown", (event) => {
     ) {
         keyPress = { operator: event.key };
     } else if (event.key === "Escape") {
-        keyPress = { clear: "c" };
+        clearCalculatorWithButton("c");
     } else if (event.key === "Delete" || event.key === "Backspace") {
-        keyPress = { clear: "ce" };
+        clearCalculatorWithButton("ce");
     } else if (event.key === "Enter" || event.key === "=") {
         keyPress = { equal: "=" };
     }
@@ -33,7 +33,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 function runCalculator(element) {
-    console.log(element.dataset);
     if (element.clear) clearCalculatorWithButton(element.clear);
 
     // Pega o operador
