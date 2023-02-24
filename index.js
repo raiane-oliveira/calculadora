@@ -72,7 +72,7 @@ function runCalculator(element) {
     let hasMoreCalculation = element.operator && secondNumber;
     if (hasMoreCalculation) {
         firstNumber = result;
-        operator = operatorClicked;
+        operator = element.operator;
         clearOfCalculator("secondNumber");
     }
 
